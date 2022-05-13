@@ -2,11 +2,13 @@
 #https://github.com/mohammadAsadolahi
 
 import numpy as np
+import matplotlib.pyplot as plt
 import gym
 from keras.layers import Dense, Activation
 from keras.models import Sequential, load_model
 import keras
 import numpy as np
+
 from google.colab import drive
 drive.mount('/Drive')
 
@@ -42,14 +44,18 @@ class replayBuffer:
     return self.state[indexes],self.action[indexes],self.reward[indexes],self.nextState[indexes],self.done[indexes]
 
 class Agent:
-  def __init__(self,stateShape,actionShape,epsilon,gamma,saveAfterIterations=1000):
+  def __init__(self,stateShape,actionShape,exploreRate=1.0,exploreRateDecay=0.9999,minimumExploreRate=0.01\
+               ,gamma=0.99,saveAfterIterations=10000,modelName="DQN_LunarLanderV2.h"):
       self.gamma=gamma
-      self.epsilon=epsilon
+      self.exploreRate=exploreRate
+      self.exploreRateDecay=exploreRateDecay
+      self.minimumExploreRate=minimumExploreRate
       self.actionShape=actionShape
       self.memory=replayBuffer(1000000,stateShape)
       self.buildModel(stateShape,actionShape)
       self.saveAfterIterations=saveAfterIterations
       self.updateIterations=0
+      self.modelName=modelName
   
   def buildModel(self,input,output):
     inputLayer=keras.Input(shape=(input,))
@@ -59,19 +65,22 @@ class Agent:
     self.model=keras.Model(inputs=inputLayer,outputs=outputLayer)
     self.model.compile(optimizer='Adam',loss='mse')
 
-  def saveModel(self,modelName):
-      self.model.save_weights(f"/Drive/MyDrive/LunarLanderModelWeights/{modelName}")
+  def saveModel(self):
+      self.model.save_weights(f"/Drive/MyDrive/LunarLanderModelWeights/DQN/{self.modelName}")
+      # print("model saved!")
 
-  def loadModel(self,modelName):
-      self.model.load_weights(f"/Drive/MyDrive/LunarLanderModelWeights/{modelName}")
-      self.tModel.set_weights(self.model.get_weights())
+  def loadModel(self):
+      self.model.load_weights(f"/Drive/MyDrive/LunarLanderModelWeights/DQN/{self.modelName}")
+      # print("model sucsessfuly loaded!")
 
   def getAction(self,state):
-    q=self.model.predict(np.expand_dims(state,axis=0))[0]
-    if np.random.random()<=self.epsilon:
+    if np.random.random()<=self.exploreRate:
       return np.random.choice([i for i in range(env.action_space.n)])
     else:
-      return np.argmax(q)
+      return np.argmax(self.model.predict(np.expand_dims(state,axis=0))[0])
+
+  def exploreDecay(self):
+      self.exploreRate=max(self.exploreRate*self.exploreRateDecay,self.minimumExploreRate)
 
   def learn(self,batchSize=64):
     if self.memory.size>batchSize:
@@ -82,15 +91,18 @@ class Agent:
       qState[batchIndex,actions]+=(rewards+(self.gamma*np.max(qNextState,axis=1)))-qState[batchIndex,actions]
       _=self.model.fit(x=states,y=qState,verbose=0)
       self.updateIterations+=1
-      if(self.saveAfterIterations<self.updateIterations)
-        self.saveModel("DQN_LunarLanderV2.h")
+      self.exploreDecay()
+      if(self.saveAfterIterations<self.updateIterations):
+        self.saveModel()
         self.updateIterations=0
 
-agent=Agent(stateShape=env.observation_space.shape[0],actionShape=env.action_space.n\
-            ,epsilon=0,gamma=0.99)
+agent=Agent(stateShape=env.observation_space.shape[0],actionShape=env.action_space.n)
+agent.loadModel()
 
+agent.exploreRate=1
+averageRewards=[]
 totalRewards=[]
-for i in range(500):
+for i in range(1,500):
   done=False
   state=env.reset()
   rewards=0
@@ -100,6 +112,17 @@ for i in range(500):
     agent.memory.save(state,action,reward,nextState,int(done))
     rewards+=reward
     state=nextState
-    agent.learn()
+    agent.learn(batchSize=256)
   totalRewards.append(rewards)
-  print(f"episode: {i+1}   reward: {rewards}  avg so far:{np.mean(totalRewards[max(0, i-100):(i+1)])}")
+  averageRewards.append(sum(totalRewards)/len(totalRewards))
+  print(f"episode: {i}   reward: {rewards}  avg so far:{averageRewards[-1]} exploreRate:{agent.exploreRate}")
+
+plt.title(f'Total Rewards')
+plt.yscale('symlog')
+plt.plot(totalRewards)
+plt.savefig("Total Rewards",dpi=200)
+plt.clf()
+plt.title(f'Average Rewards')
+plt.yscale('symlog')
+plt.plot(averageRewards)
+plt.savefig("Average Rewards",dpi=200)
