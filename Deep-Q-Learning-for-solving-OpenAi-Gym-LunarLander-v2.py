@@ -9,9 +9,6 @@ from keras.models import Sequential, load_model
 import keras
 import numpy as np
 
-from google.colab import drive
-drive.mount('/Drive')
-
 !pip3 install box2d-py
 !pip3 install gym[Box_2D]
 
@@ -66,11 +63,11 @@ class Agent:
     self.model.compile(optimizer='Adam',loss='mse')
 
   def saveModel(self):
-      self.model.save_weights(f"/Drive/MyDrive/LunarLanderModelWeights/DQN/{self.modelName}")
+      self.model.save_weights(f"{self.modelName}")
       # print("model saved!")
 
   def loadModel(self):
-      self.model.load_weights(f"/Drive/MyDrive/LunarLanderModelWeights/DQN/{self.modelName}")
+      self.model.load_weights(f"{self.modelName}")
       # print("model sucsessfuly loaded!")
 
   def getAction(self,state):
@@ -87,14 +84,16 @@ class Agent:
       states,actions,rewards,nextStates,done=self.memory.sample(batchSize)
       qState=self.model.predict(states)
       qNextState=self.model.predict(nextStates)
+      maxActions=np.argmax(qNextState,axis=1)
       batchIndex = np.arange(batchSize-1, dtype=np.int32)
-      qState[batchIndex,actions]+=(rewards+(self.gamma*np.max(qNextState,axis=1)))-qState[batchIndex,actions]
+      qState[batchIndex,actions]=(rewards+(self.gamma*qNextState[batchIndex,maxActions.astype(int)]*(1-done)))
       _=self.model.fit(x=states,y=qState,verbose=0)
-      self.updateIterations+=1
+      self.learnThreshold+=1
       self.exploreDecay()
-      if(self.saveAfterIterations<self.updateIterations):
-        self.saveModel()
-        self.updateIterations=0
+      if(self.learnThreshold%self.copyNetsCycle)==0:
+        self.tModel.set_weights(self.model.get_weights())
+        self.saveModel("DoubleDQN_LunarLanderV2.h")
+        self.learnThreshold=0
 
 agent=Agent(stateShape=env.observation_space.shape[0],actionShape=env.action_space.n)
 agent.loadModel()
