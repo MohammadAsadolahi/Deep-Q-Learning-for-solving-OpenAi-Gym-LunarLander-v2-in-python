@@ -1,5 +1,9 @@
-#WRITTEN BY MOHAMMAD ASADOLAHI mohammad.e.asadolahi@gmail.com
-#https://github.com/mohammadAsadolahi
+
+# WRITTEN BY MOHAMMAD ASADOLAHI
+# Mohammad.E.Asadolahi@gmail.com
+# https://github.com/mohammadAsadolahi
+# repo address:https://github.com/mohammadAsadolahi/Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-
+
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -41,7 +45,7 @@ class replayBuffer:
     return self.state[indexes],self.action[indexes],self.reward[indexes],self.nextState[indexes],self.done[indexes]
 
 class Agent:
-  def __init__(self,stateShape,actionShape,exploreRate=1.0,exploreRateDecay=0.9999,minimumExploreRate=0.01\
+  def __init__(self,stateShape,actionShape,exploreRate=1.0,exploreRateDecay=0.9995,minimumExploreRate=0.01\
                ,gamma=0.99,saveAfterIterations=10000,modelName="DQN_LunarLanderV2.h"):
       self.gamma=gamma
       self.exploreRate=exploreRate
@@ -88,17 +92,12 @@ class Agent:
       batchIndex = np.arange(batchSize-1, dtype=np.int32)
       qState[batchIndex,actions]=(rewards+(self.gamma*qNextState[batchIndex,maxActions.astype(int)]*(1-done)))
       _=self.model.fit(x=states,y=qState,verbose=0)
-      self.learnThreshold+=1
       self.exploreDecay()
-      if(self.learnThreshold%self.copyNetsCycle)==0:
-        self.tModel.set_weights(self.model.get_weights())
-        self.saveModel("DoubleDQN_LunarLanderV2.h")
-        self.learnThreshold=0
 
 agent=Agent(stateShape=env.observation_space.shape[0],actionShape=env.action_space.n)
-agent.loadModel()
+# agent.loadModel()
 
-agent.exploreRate=1
+agent.exploreRate=0
 averageRewards=[]
 totalRewards=[]
 for i in range(1,500):
@@ -111,7 +110,7 @@ for i in range(1,500):
     agent.memory.save(state,action,reward,nextState,int(done))
     rewards+=reward
     state=nextState
-    agent.learn(batchSize=256)
+    agent.learn(batchSize=64)
   totalRewards.append(rewards)
   averageRewards.append(sum(totalRewards)/len(totalRewards))
   print(f"episode: {i}   reward: {rewards}  avg so far:{averageRewards[-1]} exploreRate:{agent.exploreRate}")
@@ -125,3 +124,5 @@ plt.title(f'Average Rewards')
 plt.yscale('symlog')
 plt.plot(averageRewards)
 plt.savefig("Average Rewards",dpi=200)
+
+agent.saveModel()
