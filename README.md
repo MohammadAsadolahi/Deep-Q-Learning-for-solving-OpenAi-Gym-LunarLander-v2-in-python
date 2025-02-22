@@ -3,5 +3,5 @@ reinforcement learning DQN method to solve OpenAi Gym "LunarLander-v2" by usnig 
 
 
 
-![Average Rewards](https://github.com/Elktrn/Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-/blob/main/LunarLanderV2_DQN_Average%20Rewards.png)
-![Total Rewards](https://github.com/Elktrn/Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-/blob/main/LunarLanderV2_DQN_Total%20Rewards.png)
+![Average Rewards](https://github.com/Elktrn/Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-in-python/blob/main/LunarLanderV2_DQN_Average%20Rewards.png)
+![Total Rewards](https://github.com/Elktrn/Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-in-python/blob/main/LunarLanderV2_DQN_Total%20Rewards.png)
