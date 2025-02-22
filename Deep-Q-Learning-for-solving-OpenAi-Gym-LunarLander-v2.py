@@ -1,10 +1,4 @@
 
-# WRITTEN BY MOHAMMAD ASADOLAHI
-# Mohammad.E.Asadolahi@gmail.com
-# https://github.com/mohammadAsadolahi
-# repo address:https://github.com/mohammadAsadolahi/Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-
-
-
 import numpy as np
 import matplotlib.pyplot as plt
 import gym
