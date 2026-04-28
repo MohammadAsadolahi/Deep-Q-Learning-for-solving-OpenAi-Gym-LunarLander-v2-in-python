@@ -1,0 +1,68 @@
+cff-version: 1.2.0
+title: "Deep Q-Network for Solving OpenAI Gym LunarLander-v2"
+message: "If you use this software in your research, please cite it as below."
+type: software
+authors:
+  - given-names: "AG"
+    affiliation: "Google"
+    orcid: ""
+version: "1.0.0"
+date-released: "2026-04-28"
+license: MIT
+repository-code: "https://github.com/AbirGadworker/Deep-Q-Learning-for-solving-\
+  OpenAi-Gym-LunarLander-v2-in-python"
+keywords:
+  - deep-reinforcement-learning
+  - deep-q-network
+  - lunar-lander
+  - openai-gym
+  - experience-replay
+references:
+  - type: article
+    authors:
+      - family-names: Mnih
+        given-names: Volodymyr
+      - family-names: Kavukcuoglu
+        given-names: Koray
+      - family-names: Silver
+        given-names: David
+      - family-names: Rusu
+        given-names: Andrei A.
+      - family-names: Veness
+        given-names: Joel
+      - family-names: Bellemare
+        given-names: Marc G.
+      - family-names: Graves
+        given-names: Alex
+      - family-names: Riedmiller
+        given-names: Martin
+      - family-names: Fidjeland
+        given-names: Andreas K.
+      - family-names: Ostrovski
+        given-names: Georg
+      - family-names: Petersen
+        given-names: Stig
+      - family-names: Beattie
+        given-names: Charles
+      - family-names: Sadik
+        given-names: Amir
+      - family-names: Antonoglou
+        given-names: Ioannis
+      - family-names: King
+        given-names: Helen
+      - family-names: Kumaran
+        given-names: Dharshan
+      - family-names: Wierstra
+        given-names: Daan
+      - family-names: Legg
+        given-names: Shane
+      - family-names: Hassabis
+        given-names: Demis
+    title: "Human-level control through deep reinforcement learning"
+    journal: "Nature"
+    volume: 518
+    issue: 7540
+    start: 529
+    end: 533
+    year: 2015
+    doi: "10.1038/nature14236"

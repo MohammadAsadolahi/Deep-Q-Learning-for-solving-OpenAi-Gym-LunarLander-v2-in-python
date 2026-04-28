@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dqn-lunar-lander"
+version = "1.0.0"
+description = "Deep Q-Network for solving OpenAI Gym LunarLander-v2"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "AG", email = "ag@google.com"},
+]
+keywords = ["reinforcement-learning", "deep-q-network", "dqn", "lunar-lander", "openai-gym"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "numpy>=1.24.0",
+    "matplotlib>=3.7.0",
+    "keras>=3.0.0",
+    "tensorflow>=2.15.0",
+    "gymnasium[box2d]>=0.29.0",
+]
+
+[project.urls]
+Repository = "https://github.com/AbirGadworker/Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-in-python"
+
+[project.scripts]
+dqn-train = "train:train"
+dqn-eval = "evaluate:evaluate"
+
+[tool.setuptools.packages.find]
+include = ["dqn*"]
