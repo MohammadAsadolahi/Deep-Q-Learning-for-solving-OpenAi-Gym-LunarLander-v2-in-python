@@ -4,13 +4,12 @@
 
 ### A from-scratch implementation of Deep Reinforcement Learning for OpenAI Gym's LunarLander-v2
 
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-2.15%2B-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)](https://tensorflow.org)
-[![Keras](https://img.shields.io/badge/Keras-3.0%2B-D00000?style=for-the-badge&logo=keras&logoColor=white)](https://keras.io)
-[![Gymnasium](https://img.shields.io/badge/Gymnasium-0.29%2B-0081A5?style=for-the-badge)](https://gymnasium.farama.org)
+[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![Keras](https://img.shields.io/badge/Keras-D00000?style=for-the-badge&logo=keras&logoColor=white)](https://keras.io)
+[![OpenAI Gym](https://img.shields.io/badge/OpenAI%20Gym-0081A5?style=for-the-badge)](https://www.gymlibrary.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-*Developed by **AG** — Chief AI Officer, Google*
+*Developed by [**Mohammad Asadolahi**](https://github.com/MohammadAsadolahi) — Senior Agentic AI Engineer | Focus: Agentic AI Architectures In The Wild*
 
 ---
 
@@ -22,7 +21,7 @@
 
 ## Overview
 
-This repository presents a **production-grade Deep Q-Network (DQN)** implementation that teaches an agent to autonomously land a spacecraft on the lunar surface. The agent learns entirely from raw 8-dimensional state observations through trial-and-error interaction with the environment — no hand-crafted heuristics, no human demonstrations.
+This repository presents a **Deep Q-Network (DQN)** implementation that teaches an agent to autonomously land a spacecraft on the lunar surface. The agent learns entirely from raw 8-dimensional state observations through trial-and-error interaction with the environment — no hand-crafted heuristics, no human demonstrations.
 
 The project implements the foundational algorithm from DeepMind's landmark paper [*"Human-level control through deep reinforcement learning"*](https://www.nature.com/articles/nature14236) (Mnih et al., Nature 2015), adapted for continuous-state, discrete-action control.
 
@@ -98,11 +97,11 @@ The project implements the foundational algorithm from DeepMind's landmark paper
 
 ## Training Results
 
-The agent converges to a stable landing policy within ~400 episodes, consistently surpassing the solved threshold of +200 average reward:
+The plots below show the agent's learning progress over approximately 80 training episodes. The average reward trends upward over time, demonstrating the agent is learning, though it has not yet reached the solved threshold of +200 average reward in this training run:
 
 <div align="center">
 
-| Total Episode Rewards | Running Average Reward |
+| Total Episode Rewards | Average Reward |
 |:---:|:---:|
 | ![Total Rewards](LunarLanderV2_DQN_Total%20Rewards.png) | ![Average Rewards](LunarLanderV2_DQN_Average%20Rewards.png) |
 
@@ -148,7 +147,7 @@ The agent converges to a stable landing policy within ~400 episodes, consistentl
 
 ```bash
 # Clone the repository
-git clone https://github.com/AbirGadworker/Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-in-python.git
+git clone https://github.com/MohammadAsadolahi/Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-in-python.git
 cd Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-in-python
 
 # Create a virtual environment
@@ -237,11 +236,11 @@ Starting from $\varepsilon = 1.0$ (fully random), the agent gradually shifts to 
 If you use this work in your research, please cite:
 
 ```bibtex
-@software{ag2026dqn,
-  author    = {AG},
+@software{asadolahi2022dqn,
+  author    = {Mohammad Asadolahi},
   title     = {Deep Q-Network for Solving OpenAI Gym LunarLander-v2},
-  year      = {2026},
-  url       = {https://github.com/AbirGadworker/Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-in-python},
+  year      = {2022},
+  url       = {https://github.com/MohammadAsadolahi/Deep-Q-Learning-for-solving-OpenAi-Gym-LunarLander-v2-in-python},
   license   = {MIT}
 }
 ```
@@ -258,8 +257,8 @@ If you use this work in your research, please cite:
 
 <div align="center">
 
-**Built with purpose. Trained with patience. Landed with precision.**
-
-MIT License &copy; 2026 AG
+MIT License &copy; 2022 Mohammad Asadolahi
 
 </div>
+
+this readme is AI assisted generated, so check for mistakes
